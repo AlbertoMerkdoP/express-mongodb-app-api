@@ -9,20 +9,12 @@ const TYPES = {
 
 receiptCtrl.createReceipt = async (req, res) => {
   try {
-    const { name, description, currency, type, address, createdBy, createdAt } =
-      req.body
-    if (
-      !name ||
-      !description ||
-      !currency ||
-      !type ||
-      !address ||
-      !createdBy ||
-      !createdAt
-    ) {
+    const createdBy = req.user
+    const { name, description, currency, type, address, createdAt } = req.body
+    if (!name || !description || !currency || !type || !address || !createdAt) {
       return responseHandler(
         400,
-        "'name', 'description', 'currency', 'type', 'address', 'createdBy' and 'createdAt' fields are required"
+        "'name', 'description', 'currency', 'type', 'address' and 'createdAt' fields are required"
       )(res)
     }
     if (!description.title || !description.price) {
@@ -73,7 +65,7 @@ receiptCtrl.createReceipt = async (req, res) => {
 
 receiptCtrl.getAllReceipt = async (req, res) => {
   try {
-    const { createdBy } = req.params
+    const createdBy = req.user
     const receiptQuery = await receiptSchema.find({
       createdBy
     })
@@ -86,8 +78,12 @@ receiptCtrl.getAllReceipt = async (req, res) => {
 
 receiptCtrl.getReceipt = async (req, res) => {
   try {
-    const { id } = req.params
-    const receiptQuery = await receiptSchema.findById(id)
+    const _id = req.params.id
+    const createdBy = req.user
+    const receiptQuery = await receiptSchema.findOne({
+      _id,
+      createdBy
+    })
     if (!receiptQuery) return responseHandler(404)(res)
 
     return responseHandler(200)(res, receiptQuery)
