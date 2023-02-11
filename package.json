@@ -1,0 +1,47 @@
+{
+  "name": "express-mongodb-app-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "format": "npx prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlbertoMerkdoP/express-mongodb-app-api.git"
+  },
+  "keywords": [
+    "api",
+    "express",
+    "mongodb"
+  ],
+  "author": "Alberto Mercado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlbertoMerkdoP/express-mongodb-app-api/issues"
+  },
+  "homepage": "https://github.com/AlbertoMerkdoP/express-mongodb-app-api#readme",
+  "devDependencies": {
+    "eslint": "8.34.0",
+    "eslint-config-prettier": "8.6.0",
+    "eslint-config-standard": "17.0.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-n": "15.6.1",
+    "eslint-plugin-promise": "6.1.1",
+    "nodemon": "2.0.20",
+    "prettier": "2.8.4"
+  },
+  "dependencies": {
+    "bcryptjs": "2.4.3",
+    "cookie-parser": "1.4.6",
+    "cors": "2.8.5",
+    "dotenv": "16.0.3",
+    "express": "4.18.2",
+    "jsonwebtoken": "9.0.0",
+    "mongoose": "6.9.1"
+  }
+}
