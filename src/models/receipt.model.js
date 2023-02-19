@@ -9,6 +9,11 @@ const receiptSchema = new Schema(
     },
     description: [
       {
+        cod: {
+          type: String,
+          trim: true,
+          required: [true, 'Code is required']
+        },
         title: {
           type: String,
           trim: true,
@@ -31,9 +36,16 @@ const receiptSchema = new Schema(
       trim: true,
       required: [true, 'Currency is required']
     },
+    discountRate: {
+      type: Number,
+      default: 0
+    },
+    taxRate: {
+      type: Number,
+      default: 0
+    },
     type: {
       type: Number,
-      trim: true,
       required: [true, 'Type is required']
     },
     address: {
