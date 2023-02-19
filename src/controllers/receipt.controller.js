@@ -7,6 +7,14 @@ const TYPES = {
   ticket: 2
 }
 
+const hasError = (array) => {
+  let error = false
+  array.forEach(({ cod, title, price }) => {
+    if (!cod || !title || !price) error = true
+  })
+  return error
+}
+
 receiptCtrl.createReceipt = async (req, res) => {
   try {
     const createdBy = req.user
@@ -17,7 +25,8 @@ receiptCtrl.createReceipt = async (req, res) => {
         "'name', 'description', 'currency', 'type', 'address' and 'createdAt' fields are required"
       )(res)
     }
-    if (!description.cod || !description.title || !description.price) {
+
+    if (Array.isArray(description) && hasError(description)) {
       return responseHandler(
         400,
         "'cod', 'title' and 'price' fields in 'description' are required"
@@ -106,8 +115,7 @@ receiptCtrl.updateReceipt = async (req, res) => {
       createdBy
     })
     if (!receiptQuery) return responseHandler(404)(res)
-
-    if (description && (!description.cod || !description.title || !description.price)) {
+    if (description && (Array.isArray(description) && hasError(description))) {
       return responseHandler(
         400,
         "'cod', 'title' and 'price' fields in 'description' are required"
