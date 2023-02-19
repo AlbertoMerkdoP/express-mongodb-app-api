@@ -10,17 +10,17 @@ const TYPES = {
 receiptCtrl.createReceipt = async (req, res) => {
   try {
     const createdBy = req.user
-    const { name, description, currency, type, address, createdAt } = req.body
+    const { name, description, currency, discountRate, taxRate, type, address, createdAt } = req.body
     if (!name || !description || !currency || !type || !address || !createdAt) {
       return responseHandler(
         400,
         "'name', 'description', 'currency', 'type', 'address' and 'createdAt' fields are required"
       )(res)
     }
-    if (!description.title || !description.price) {
+    if (!description.cod || !description.title || !description.price) {
       return responseHandler(
         400,
-        "'title' and 'price' fields in 'description' are required"
+        "'cod', 'title' and 'price' fields in 'description' are required"
       )(res)
     }
 
@@ -38,6 +38,8 @@ receiptCtrl.createReceipt = async (req, res) => {
         type,
         description,
         currency,
+        discountRate,
+        taxRate,
         address,
         createdBy,
         createdAt,
@@ -49,6 +51,8 @@ receiptCtrl.createReceipt = async (req, res) => {
         type,
         description,
         currency,
+        discountRate,
+        taxRate,
         address,
         createdBy,
         createdAt
@@ -96,17 +100,17 @@ receiptCtrl.updateReceipt = async (req, res) => {
   try {
     const _id = req.params.id
     const createdBy = req.user
-    const { name, description, currency, type, address, createdAt } = req.body
+    const { name, description, currency, discountRate, taxRate, type, address, createdAt } = req.body
     const receiptQuery = await receiptSchema.findOne({
       _id,
       createdBy
     })
     if (!receiptQuery) return responseHandler(404)(res)
 
-    if (description && (!description.title || !description.price)) {
+    if (description && (!description.cod || !description.title || !description.price)) {
       return responseHandler(
         400,
-        "'title' and 'price' fields in 'description' are required"
+        "'cod', 'title' and 'price' fields in 'description' are required"
       )(res)
     }
 
@@ -134,6 +138,8 @@ receiptCtrl.updateReceipt = async (req, res) => {
         type,
         description,
         currency,
+        discountRate,
+        taxRate,
         address,
         createdAt,
         billTo: []
@@ -143,6 +149,8 @@ receiptCtrl.updateReceipt = async (req, res) => {
         name,
         description,
         currency,
+        discountRate,
+        taxRate,
         address,
         createdAt
       })
